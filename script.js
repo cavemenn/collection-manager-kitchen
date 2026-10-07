@@ -22,13 +22,15 @@ let items = [
 
 const itemGrid = document.getElementById("itemGrid");
 
-let currentLocation = "All"; //temporary locatoin for testing
+let currentLocation = "All"; //location set when load into page
+let currentType = "All"; //type set when load into page
 
 function renderItems() {
     itemGrid.innerHTML = ""; // empties the grid so wont give duplicates
 
     const visibleItems = items.filter(function(item){
-        return currentLocation === "All" || item.location === currentLocation;
+        return (currentLocation === "All" || item.location === currentLocation) &&
+        (currentType === "All" || item.type === currentType);
     })
 
     visibleItems.forEach(function (item) {
@@ -93,3 +95,21 @@ locationNames.forEach(function (name) {
     tabs.appendChild(tabButton);
 });
 
+// type tabs make visible on html
+const filter = document.getElementById("filter");
+const typeNames = ["All", "Dairy", "Meat", "Fish", "Beer", "Drinks", "Vegetable", "Noodles", "Grains", "Sauces", "Others"];
+
+const typeSelect = document.createElement("select");
+
+typeNames.forEach(function (typeName) {
+    const option = document.createElement("option");
+    option.textContent = typeName;
+    typeSelect.appendChild(option);
+});
+
+typeSelect.addEventListener("change", function () {
+    currentType = typeSelect.value;
+    renderItems();
+});
+
+filter.appendChild(typeSelect);
