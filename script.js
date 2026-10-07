@@ -22,13 +22,33 @@ let items = [
 
 const itemGrid = document.getElementById("itemGrid");
 
+let currentLocation = "All"; //temporary locatoin for testing
+
 function renderItems() {
     itemGrid.innerHTML = ""; // empties the grid so wont give duplicates
 
-    items.forEach(function (item) {
+    const visibleItems = items.filter(function(item){
+        return currentLocation === "All" || item.location === currentLocation;
+    })
+
+    visibleItems.forEach(function (item) {
         const box = document.createElement("div"); //creates a div
         box.classList.add("itemCard"); //creates a class that i can edit later in styles.css
-        box.textContent = item.name + "x" + item.stock;
+        
+        const info = document.createElement("span");
+        info.textContent = item.name + "x" + item.stock;
+
+        const removeButton = document.createElement("button");
+        removeButton.textContent = "Remove";
+
+        removeButton.addEventListener("click", function() {
+            const realIndex = items.indexOf(item);
+            items.splice(realIndex,1);
+            renderItems();
+        });
+
+        box.appendChild(info);
+        box.appendChild(removeButton);
         itemGrid.appendChild(box); //pushes the box created into the page within itemGrid
     });
 }
@@ -56,4 +76,20 @@ addItemForm.addEventListener("submit", function(event) {
     addItemForm.reset();
     
 })
+
+// filterting tabs make visible on html
+const tabs = document.getElementById("tabs");
+const locationNames = ["All", "Fridge", "Freezer", "Pantry"];
+
+locationNames.forEach(function (name) {
+    const tabButton = document.createElement("button");
+    tabButton.textContent = name;
+
+    tabButton.addEventListener("click", function () {
+        currentLocation = name;
+        renderItems();
+    });
+
+    tabs.appendChild(tabButton);
+});
 
