@@ -1,3 +1,4 @@
+// this function is so that its easy to add items in the future
 function createItem(name, location, type, stock, cost) {
     return {
         name: name,
@@ -8,6 +9,7 @@ function createItem(name, location, type, stock, cost) {
     };    
 }
 
+// setting up the initial items
 let items = [
     createItem("Milk", "Fridge", "Dairy", 2, 8),
     createItem("Garlic", "Pantry", "Vegetable", 4, 2),
@@ -18,18 +20,40 @@ let items = [
     createItem("Sos Cili", "Pantry", "Sauces", 1, 8.90),            
 ];
 
-const grid = document.getElementById("itemGrid");
+const itemGrid = document.getElementById("itemGrid");
 
 function renderItems() {
-    grid.innerHTML = "";
+    itemGrid.innerHTML = ""; // empties the grid so wont give duplicates
 
     items.forEach(function (item) {
-        const box = document.createElement("div");
-        box.classList.add("itemCard");
+        const box = document.createElement("div"); //creates a div
+        box.classList.add("itemCard"); //creates a class that i can edit later in styles.css
         box.textContent = item.name + "x" + item.stock;
-        grid.appendChild(box);
+        itemGrid.appendChild(box); //pushes the box created into the page within itemGrid
     });
 }
 
 renderItems();
+
+// to add new items into the initial items
+const addItemForm = document.getElementById("addItemForm");
+
+addItemForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("itemName").value;
+    const stock = Number(document.getElementById("itemStock").value);
+    const location = document.getElementById("itemLocation").value;
+    const type = document.getElementById("itemType").value;
+    const price = Number(document.getElementById("itemPrice").value);
+
+    const newItem = createItem(name, location, type, stock, price);
+
+    items.push(newItem);
+
+    renderItems();
+    
+    addItemForm.reset();
+    
+})
 

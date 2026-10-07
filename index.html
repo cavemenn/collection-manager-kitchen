@@ -17,6 +17,43 @@
         <!-- items on left hand side will remain static even when scrolling (for fullscreen) -->
         <div class="leftHandSide">
             <section class="addItemMenu">
+                <div class="panelHead">
+                    <h2>Add Items</h2>
+                </div>
+
+                <form id="addItemForm">
+                    <label for="itemName">Name:</label>
+                    <input type="text" id="itemName" placeholder="e.g. Fresh Milk" required/>
+
+                    <label for="itemLocation">Location:</label>
+                    <select id="itemLocation">
+                        <option>Fridge</option>
+                        <option>Freezer</option>
+                        <option>Pantry</option>
+                    </select>
+
+                    <label for="itemType">Type:</label>
+                    <select id="itemType">
+                        <option>Dairy</option>
+                        <option>Meat</option>
+                        <option>Fish</option>
+                        <option>Beer</option>
+                        <option>Drinks</option>
+                        <option>Vegetable</option>
+                        <option>Noodles</option>
+                        <option>Grains</option>
+                        <option>Sauces</option>
+                        <option>Others</option>
+                    </select>
+                    
+                    <label for="itemStock">Quantity</label>
+                    <input type="number" id="itemStock" min="0" step="1" value="1"/>
+
+                    <label for="itemPrice">Price each (RM):</label>
+                    <input type="number" id="itemPrice" min="0" step="0.01" placeholder="0.00"/>
+
+                    <button type="submit">Add Item</button>
+                </form>
 
             </section>
 
