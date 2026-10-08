@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ForgetMeNot</title>
 
+    <link rel="icon" href="images/favicon-thinking.jpg">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
@@ -69,6 +71,11 @@
                         </label>
                     </div>
 
+                    <label for="itemImage">
+                        Photo:
+                        <input type="file" id="itemImage" accept="image/*"/>
+                    </label>
+
                     <button type="submit" class="btn btn-primary">Add Item</button>
                 </form>
 
@@ -76,7 +83,8 @@
 
             <!-- can click button to generate 3 different image of a person thinking -->
             <section class="imageMenu">
-
+                <img id="thinkImg" src="images/think1.jpeg" alt="Thinking meme">
+                <button id="thinkBtn" type="button">Click to think</button>
             </section>
         </div>
 

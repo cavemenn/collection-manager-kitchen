@@ -1,23 +1,24 @@
 // this function is so that its easy to add items in the future
-function createItem(name, location, type, stock, cost) {
+function createItem(name, location, type, stock, cost, image) {
     return {
         name: name,
         location: location,
         type: type,
         stock: stock,
         cost: cost,
+        image: image || null,
     };    
 };
 
 // setting up the initial items
 let items = [
-    createItem("Milk", "Fridge", "Dairy", 2, 8),
-    createItem("Garlic", "Pantry", "Vegetable", 4, 2),
-    createItem("Chicken 1kg", "Freezer", "Meat", 1, 17.80),
-    createItem("Coca Cola", "Fridge", "Drinks", 2, 10),
-    createItem("Jasmine Rice 5kg", "Fridge", "Grains", 1, 20),
-    createItem("Maggi Mee", "Pantry", "Noodles", 1, 8.90),
-    createItem("Sos Cili", "Pantry", "Sauces", 1, 8.90),            
+    createItem("Milk", "Fridge", "Dairy", 2, 8, "images/milk.png"),
+    createItem("Garlic", "Pantry", "Vegetable", 4, 2, "images/garlic.jpeg"),
+    createItem("Chicken 1kg", "Freezer", "Meat", 1, 17.80, "images/chicken.jpeg"),
+    createItem("Coca Cola", "Fridge", "Drinks", 2, 10, "images/cola.jpeg"),
+    createItem("Jasmine Rice 5kg", "Fridge", "Grains", 1, 20, "images/rice.jpeg"),
+    createItem("Maggi Mee", "Pantry", "Noodles", 1, 8.90, "images/maggi.jpeg"),
+    createItem("Sos Cili", "Pantry", "Sauces", 1, 8.90, "images/chilli.jpeg"),            
 ];
 
 const itemGrid = document.getElementById("itemGrid");
@@ -70,6 +71,19 @@ function renderItems() {
         meta.appendChild(stockInCard);
         meta.appendChild(costInCard);
 
+        if (item.image) {
+            const pic = document.createElement("img");
+            pic.src = item.image;
+            pic.alt = item.name;
+            pic.classList.add("cardImage");
+            box.appendChild(pic);
+        } else {
+            const placeholder = document.createElement("div");
+            placeholder.classList.add("cardPlaceholder");
+            placeholder.textContent = "No photo";
+            box.appendChild(placeholder);
+        }
+
         const removeButton = document.createElement("button");
         removeButton.classList.add("btnRemove");
         removeButton.textContent = "Remove";
@@ -103,14 +117,23 @@ addItemForm.addEventListener("submit", function(event) {
     const location = document.getElementById("itemLocation").value;
     const type = document.getElementById("itemType").value;
     const price = Number(document.getElementById("itemPrice").value);
+    const file = document.getElementById("itemImage").files[0];
 
-    const newItem = createItem(name, location, type, stock, price);
+    function addItem(image) {
+        items.push(createItem(name, location, type, stock, price, image));
+        renderItems();
+        addItemForm.reset();
+    }
 
-    items.push(newItem);
-
-    renderItems();
-    
-    addItemForm.reset();
+    if (file) {
+        const reader = new FileReader();
+        reader.addEventListener("load", function () {
+            addItem(reader.result); // base64 data URL of the image
+        });
+        reader.readAsDataURL(file);
+    } else {
+        addItem(null);
+    }
     
 });
 
@@ -122,9 +145,19 @@ locationNames.forEach(function (name) {
     const tabButton = document.createElement("button");
     tabButton.textContent = name;
 
+    if (name === currentLocation) {
+        tabButton.classList.add("active")
+    }
+
     tabButton.addEventListener("click", function () {
         currentLocation = name;
         renderItems();
+
+        tabs.querySelectorAll("button").forEach(function(btn) {
+            btn.classList.remove("active")
+        });
+
+        tabButton.classList.add("active");
     });
 
     tabs.appendChild(tabButton);
@@ -148,3 +181,30 @@ typeSelect.addEventListener("change", function () {
 });
 
 filter.appendChild(typeSelect);
+
+// thinking meme button
+const thinkImages = [
+  "images/think1.jpeg",
+  "images/think2.jpg",
+  "images/think3.jpg",
+  "images/think4.jpeg",
+  "images/think5.jpeg",
+];
+
+const thinkImg = document.getElementById("thinkImg");
+const thinkBtn = document.getElementById("thinkBtn");
+
+// preload so there's no flicker when swapping
+thinkImages.forEach(src => { new Image().src = src; });
+
+let lastThinkIndex = 0; // matches the starting src in index.html (think1.png)
+
+thinkBtn.addEventListener("click", () => {
+  let next;
+  do {
+    next = Math.floor(Math.random() * thinkImages.length);
+  } while (next === lastThinkIndex);
+
+  lastThinkIndex = next;
+  thinkImg.src = thinkImages[next];
+});
