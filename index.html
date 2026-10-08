@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ForgetMeNot</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -22,37 +27,49 @@
                 </div>
 
                 <form id="addItemForm">
-                    <label for="itemName">Name:</label>
-                    <input type="text" id="itemName" placeholder="e.g. Fresh Milk" required/>
+                    <label for="itemName">
+                        Name:
+                        <input type="text" id="itemName" placeholder="e.g. Fresh Milk" required/>
+                    </label>
 
-                    <label for="itemLocation">Location:</label>
-                    <select id="itemLocation">
-                        <option>Fridge</option>
-                        <option>Freezer</option>
-                        <option>Pantry</option>
-                    </select>
+                    <div class="nextRow">
+                        <label for="itemLocation">
+                            Location:
+                            <select id="itemLocation">
+                                <option>Fridge</option>
+                                <option>Freezer</option>
+                                <option>Pantry</option>
+                            </select>
+                        </label>
 
-                    <label for="itemType">Type:</label>
-                    <select id="itemType">
-                        <option>Dairy</option>
-                        <option>Meat</option>
-                        <option>Fish</option>
-                        <option>Beer</option>
-                        <option>Drinks</option>
-                        <option>Vegetable</option>
-                        <option>Noodles</option>
-                        <option>Grains</option>
-                        <option>Sauces</option>
-                        <option>Others</option>
-                    </select>
+                        <label for="itemType">
+                            Type:
+                            <select id="itemType">
+                                <option>Dairy</option>
+                                <option>Meat</option>
+                                <option>Fish</option>
+                                <option>Beer</option>
+                                <option>Drinks</option>
+                                <option>Vegetable</option>
+                                <option>Noodles</option>
+                                <option>Grains</option>
+                                <option>Sauces</option>
+                                <option>Others</option>
+                            </select>
+                        </label>
+                    </div>
                     
-                    <label for="itemStock">Quantity</label>
-                    <input type="number" id="itemStock" min="0" step="1" value="1"/>
+                    <div class="nextRow">
+                        <label for="itemStock">Quantity
+                            <input type="number" id="itemStock" min="0" step="1" value="1"/>
+                        </label>
 
-                    <label for="itemPrice">Price each (RM):</label>
-                    <input type="number" id="itemPrice" min="0" step="0.01" placeholder="0.00"/>
+                        <label for="itemPrice">Price each (RM):
+                            <input type="number" id="itemPrice" min="0" step="0.01" placeholder="0.00"/>
+                        </label>
+                    </div>
 
-                    <button type="submit">Add Item</button>
+                    <button type="submit" class="btn btn-primary">Add Item</button>
                 </form>
 
             </section>
@@ -71,8 +88,8 @@
                 </div>
 
                 <!-- make a dropdown menu to filter the selection for the type ic Dairy, Veges, Beer, Sodas, Meat, etc. -->
-                <div id="filter"> 
-
+                <div id="filter">
+                    Filter:
                 </div>
             </div>
 

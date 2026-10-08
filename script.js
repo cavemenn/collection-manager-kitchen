@@ -7,7 +7,7 @@ function createItem(name, location, type, stock, cost) {
         stock: stock,
         cost: cost,
     };    
-}
+};
 
 // setting up the initial items
 let items = [
@@ -37,10 +37,41 @@ function renderItems() {
         const box = document.createElement("div"); //creates a div
         box.classList.add("itemCard"); //creates a class that i can edit later in styles.css
         
-        const info = document.createElement("span");
-        info.textContent = item.name + "x" + item.stock;
+        // const info = document.createElement("span");
+        // info.textContent = item.name + "x" + item.stock;
+
+        const nameInCard = document.createElement("h3");
+        nameInCard.textContent = item.name;
+
+        const tags = document.createElement("div");
+        tags.classList.add("cardTags");
+
+        const locationInCard = document.createElement("span");
+        locationInCard.classList.add("tag","tag" + item.location);
+        locationInCard.textContent = item.location;
+
+        const typeInCard = document.createElement("span");
+        typeInCard.classList.add("tag","tagType");
+        typeInCard.textContent = item.type;
+
+        tags.appendChild(locationInCard);
+        tags.appendChild(typeInCard);
+
+        const meta = document.createElement("div");
+        meta.classList.add("cardMeta");
+
+        const stockInCard = document.createElement("span");
+        stockInCard.textContent = "Quantity: " + item.stock;
+
+        const costInCard = document.createElement("span");
+        costInCard.classList.add("cardPrice");
+        costInCard.textContent = "RM"+ item.cost.toFixed(2) +" each";
+
+        meta.appendChild(stockInCard);
+        meta.appendChild(costInCard);
 
         const removeButton = document.createElement("button");
+        removeButton.classList.add("btnRemove");
         removeButton.textContent = "Remove";
 
         removeButton.addEventListener("click", function() {
@@ -49,11 +80,15 @@ function renderItems() {
             renderItems();
         });
 
-        box.appendChild(info);
+        // box.appendChild(info);
+        box.appendChild(nameInCard);
+        box.appendChild(tags);
+        box.appendChild(meta);
+              
         box.appendChild(removeButton);
         itemGrid.appendChild(box); //pushes the box created into the page within itemGrid
     });
-}
+};
 
 renderItems();
 
@@ -77,7 +112,7 @@ addItemForm.addEventListener("submit", function(event) {
     
     addItemForm.reset();
     
-})
+});
 
 // filterting tabs make visible on html
 const tabs = document.getElementById("tabs");
