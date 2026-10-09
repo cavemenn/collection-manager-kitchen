@@ -141,6 +141,15 @@ input, select {
     background: var(--teal-dark);
 }
 
+#addMessage {
+    margin: 0;
+    min-height: 1.2em;   /* reserves space so the layout doesn't jump */
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--fresh);
+    text-align: center;
+}
+
 /* thinking meme */
 .imageMenu {
     flex: 1 1 0;               /* take only the leftover space */
@@ -357,4 +366,10 @@ input, select {
     text-align: center;
     font-size: 0.8rem;
     color: var(--ink-soft);
+}
+
+.cardRating {
+    color: gold;
+    font-size: 1rem;
+    text-align: center;
 }

@@ -1,5 +1,5 @@
 // this function is so that its easy to add items in the future
-function createItem(name, location, type, stock, cost, image) {
+function createItem(name, location, type, stock, cost, image, rating) {
     return {
         name: name,
         location: location,
@@ -7,18 +7,19 @@ function createItem(name, location, type, stock, cost, image) {
         stock: stock,
         cost: cost,
         image: image || null,
+        rating: rating || 0,
     };    
 };
 
 // setting up the initial items
 let items = [
-    createItem("Milk", "Fridge", "Dairy", 2, 8, "images/milk.png"),
-    createItem("Garlic", "Pantry", "Vegetable", 4, 2, "images/garlic.jpeg"),
-    createItem("Chicken 1kg", "Freezer", "Meat", 1, 17.80, "images/chicken.jpeg"),
-    createItem("Coca Cola", "Fridge", "Drinks", 2, 10, "images/cola.jpeg"),
-    createItem("Jasmine Rice 5kg", "Fridge", "Grains", 1, 20, "images/rice.jpeg"),
-    createItem("Maggi Mee", "Pantry", "Noodles", 1, 8.90, "images/maggi.jpeg"),
-    createItem("Sos Cili", "Pantry", "Sauces", 1, 8.90, "images/chilli.jpeg"),            
+    createItem("Milk", "Fridge", "Dairy", 2, 8, "images/milk.png",5),
+    createItem("Garlic", "Pantry", "Vegetable", 4, 2, "images/garlic.jpeg", 5),
+    createItem("Chicken 1kg", "Freezer", "Meat", 1, 17.80, "images/chicken.jpeg", 5),
+    createItem("Coca Cola", "Fridge", "Drinks", 2, 10, "images/cola.jpeg", 2),
+    createItem("Jasmine Rice 5kg", "Fridge", "Grains", 1, 20, "images/rice.jpeg", 5),
+    createItem("Maggi Mee", "Pantry", "Noodles", 1, 8.90, "images/maggi.jpeg", 3),
+    createItem("Sos Cili", "Pantry", "Sauces", 1, 8.90, "images/chilli.jpeg", 4),            
 ];
 
 const itemGrid = document.getElementById("itemGrid");
@@ -84,6 +85,10 @@ function renderItems() {
             box.appendChild(placeholder);
         }
 
+        const ratingInCard = document.createElement("div");
+        ratingInCard.classList.add("cardRating");
+        ratingInCard.textContent = "Wife Approval: " + "★".repeat(item.rating) + "☆".repeat(5-item.rating);
+
         const removeButton = document.createElement("button");
         removeButton.classList.add("btnRemove");
         removeButton.textContent = "Remove";
@@ -98,6 +103,7 @@ function renderItems() {
         box.appendChild(nameInCard);
         box.appendChild(tags);
         box.appendChild(meta);
+        box.appendChild(ratingInCard);
               
         box.appendChild(removeButton);
         itemGrid.appendChild(box); //pushes the box created into the page within itemGrid
@@ -117,18 +123,25 @@ addItemForm.addEventListener("submit", function(event) {
     const location = document.getElementById("itemLocation").value;
     const type = document.getElementById("itemType").value;
     const price = Number(document.getElementById("itemPrice").value);
+    const rating = Number(document.getElementById("itemRating").value);
     const file = document.getElementById("itemImage").files[0];
+    const addMessage = document.getElementById("addMessage");
 
     function addItem(image) {
-        items.push(createItem(name, location, type, stock, price, image));
+        items.push(createItem(name, location, type, stock, price, image, rating));
         renderItems();
         addItemForm.reset();
+
+        addMessage.textContent = name + " has been successfully added!";
+        setTimeout(function () {
+        addMessage.textContent = "";
+        }, 3000);
     }
 
     if (file) {
         const reader = new FileReader();
         reader.addEventListener("load", function () {
-            addItem(reader.result); // base64 data URL of the image
+            addItem(reader.result); 
         });
         reader.readAsDataURL(file);
     } else {

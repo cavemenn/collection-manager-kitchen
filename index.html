@@ -17,7 +17,7 @@
     <!-- header will remain static even when scrolling (for fullscreen) -->
     <header class="websiteHeader">
         <h1 class="websiteBrand">Forget Me Not!</h1>
-        <p class="websiteTagline">What's in my fridge?</p>
+        <p class="websiteTagline">What's in my kitchen?</p>
     </header>
 
     <div class="pageLayout">
@@ -71,12 +71,24 @@
                         </label>
                     </div>
 
+                    <label for="itemRating">
+                        Wife Approval Rating:
+                        <select id="itemRating">
+                            <option value="5">★★★★★</option>
+                            <option value="4">★★★★☆</option>
+                            <option value="3">★★★☆☆</option>
+                            <option value="2">★★☆☆☆</option>
+                            <option value="1">★☆☆☆☆</option>
+                        </select>
+                    </label>
+
                     <label for="itemImage">
                         Photo:
                         <input type="file" id="itemImage" accept="image/*"/>
                     </label>
 
                     <button type="submit" class="btn btn-primary">Add Item</button>
+                    <p id="addMessage"></p>
                 </form>
 
             </section>
